@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>register</title>
+    <link rel="stylesheet" href="register.css">
+</head>
+<body>
+    <h2 id="register-title">REGISTER</h2>
+    <div class="divider"></div>
+
+    <form action="/register" method="post" id="regForm">
+            <div class="form-div">
+                <label for="id">id</label>
+                <input type="text" name="id" class="form-input" id="id"
+                    placeholder="첫 글자는 영문자, 나머지는 영문자 또는 숫자로 5~8자리">
+            </div>
+            <p class="error" id="idError">첫 글자는 영문자, 나머지는 영문자 또는 숫자로 5~8자리로 입력해주세요.</p>
+            <div class="form-div">
+                <label for="pwd">비밀번호</label>
+                <input type="text" name="pwd" class="form-input" id="pwd"
+                    placeholder="영어 대문자, 소문자, 숫자를 모두 포함해야하며 5~8자리">
+            </div>
+            <p class="error" id="pwdError">영어 대문자, 소문자, 숫자를 모두 포함해야하며 5~8자리로 입력해주세요.</p>
+            <div class="form-div">
+                <label for="pwdConfirm">비밀번호 확인</label>
+                <input type="text" name="pwdConfirm" class="form-input" id="pwdConfirm">
+            </div>
+            <p class="error" id="pwdConfirmError">비밀번호가 일치하지 않습니다.</p>
+            <div class="form-div">
+                <label for="name">이름</label>
+                <input type="text" name="name" class="form-input" id="name" placeholder="한글 2~5글자">
+            </div>
+            <p class="error" id="nameError">한글 2~5글자를 입력해주세요.</p>
+            <div class="form-div">
+                <label for="이메일">이메일</label>
+                <input type="text" name="email" class="form-input" id="email">
+            </div>
+            <p class="error" id="emailError">이메일을 정확히 입력해주세요.</p>
+        <div class="button-wrap">
+            <button type="button" id="cancleBtn">취소</button>
+            <button type="submit" id="submitBtn">회원가입</button>
+        </div>
+    </form>
+
+
+     <!-- 자바스크립트 -->
+     <script>
+        //취소버튼에 뒤로가기 이벤트 부착
+        const cancle = document.querySelector('#cancleBtn');
+        cancle.addEventListener('click', () => window.history.back());
+
+        //정규식 검증
+        const form = document.querySelector('#regForm');
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            //입력 요소 추출
+            const idInput = document.querySelector('#id');
+            const pwdInput = document.querySelector('#pwd');
+            const pwdConfirmInput = document.querySelector('#pwdConfirm');
+            const nameInput = document.querySelector('#name');
+            const emailInput = document.querySelector('#email');
+
+            // 입력 요소들의 값을 추출(trim 함수로 값 좌우측 공백 제거)
+			let id = idInput.value.trim();
+			let pwd = pwdInput.value.trim();
+			let pwdConfirm = pwdConfirmInput.value.trim();
+			let name = nameInput.value.trim();
+			let email = emailInput.value.trim();
+
+            //정규식
+            const idRegex = /^[a-zA-Z][a-zA-Z0-9]{4,7}$/;;
+            const pwdRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[a-zA-Z\d!@#$%^&*]{5,8}$/;
+            const nameRegex = /^[가-힣]{2,5}$/;
+            const emailRegex = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+
+            let valid = true;
+            //아이디 검증
+            if (id === "") {
+				alert("아이디를 입력하세요.")
+				idInput.focus();
+				return;
+			}
+            if (!idRegex.test(id)) {
+                document.querySelector('#idError').style.display = 'block';
+                idInput.focus();
+                return;
+            } else {
+                document.querySelector('#idError').style.display = 'none';
+            }
+
+            //비밀번호 검증
+            if (pwd === "") {
+				alert("비밀번호를 입력하세요."); 
+				pwdInput.focus();
+				return;
+			}
+            if (!pwdRegex.test(pwd)) {
+                document.querySelector('#pwdError').style.display = 'block';
+                pwdInput.focus();
+                return;
+            } else {
+                document.querySelector('#pwdError').style.display = 'none';
+            }
+
+            //비밀번호 불일치 검증
+            if (pwd !== pwdConfirm) {
+                document.querySelector('#pwdConfirmError').style.display = 'block';
+                pwdConfirmInput.focus();
+                return;
+            } else {
+                document.querySelector('#pwdConfirmError').style.display = 'none';
+            }
+
+            //이름 검증
+            if (name === "") {
+				alert("이름을 입력해주세요.");
+				nameInput.focus();
+				return;
+            }
+            if (!nameRegex.test(name)) {
+                document.querySelector('#nameError').style.display = 'block';
+                nameInput.focus();
+                return;
+            } else {
+                document.querySelector('#nameError').style.display = 'none';
+            }
+
+            //이메일 검증
+            if (email === "") {
+				alert("이메일을 입력해주세요.")
+				emailInput.focus();
+				return;
+			}
+            if (!emailRegex.test(email)) {
+                document.querySelector('#emailError').style.display = 'block';
+                emailInput.focus();
+                return;
+            } else {
+                document.querySelector('#emailError').style.display = 'none';
+            }
+
+            // 모든 검증을 통과하면 submit
+            alert("모두 통과 submit ㄱㄱ")
+            //form.submit();
+        });
+
+    </script>
+</body>
+</html>

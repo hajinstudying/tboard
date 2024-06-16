@@ -1,0 +1,52 @@
+body {
+    margin: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.title-wrap{
+    padding: 20px 0 20px 90px;
+}
+#writeForm {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-wrap,
+.button-wrap {
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    width: 600px;
+
+}
+
+label {
+    display: inline-block;
+    width: 90px;
+    padding-right: 10px;
+    text-align: right;
+}
+
+#titleInput {
+    width: 400px;
+    box-sizing: border-box;
+}
+
+#contentInput {
+    height: 300px;
+    width: 400px;
+    resize: none;
+    box-sizing: border-box;
+}
+
+.button-wrap {
+    display: flex;
+    justify-content: center;
+    width: 600px;
+}
+#submitBtn {
+    width:100px;
+    margin-left: 90px;
+}
